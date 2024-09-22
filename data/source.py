@@ -105,7 +105,15 @@ NEWS_SOURCES = [
         "type": "webpage",
         "url": "https://hashnode.com/recent",
         "language": "en",
-    }
+    },
+    {
+        "id": 14,
+        "icon": "https://techcrunch.com/wp-content/uploads/2018/04/tc-logo-2018-square-reverse2x.png?resize=1200,1200",
+        "name": "TechCrunch",
+        "type": "webpage",
+        "url": "https://techcrunch.com/",
+        "language": "en",
+    },
 ]
 
 

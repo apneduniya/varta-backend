@@ -3,8 +3,9 @@ from utils.rss_feeds import load_rss_data
 from utils.scrape import scrape_webpage
 from groq import Groq
 import os
+import datetime
 import dotenv
-from helpers.common import parse_json_garbage_with_safety
+from helpers.common import parse_json_garbage_with_safety, convert_relative_time
 from helpers.news import get_news_source_details
 from helpers.prompt import USER_PREFERED_NEWS_PROMPT, LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT, ARTICLE_PAGE_SCRAPING_PROMPT
 
@@ -19,11 +20,14 @@ async def predict_news_list(user_interests: t.List[str], news_list: t.List[t.Dic
         api_key=os.environ.get("GROQ_API_KEY"),
     )
 
+    user_interests = ", ".join(user_interests) # Convert list to string
+    current_date_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Get current date and time (like 2021-10-18 00:00:00)
+
     chat_completion = client.chat.completions.create(
         messages=[
             {
                 "role": "user",
-                "content": USER_PREFERED_NEWS_PROMPT.format(user_interests=user_interests, news_data=news_list),
+                "content": USER_PREFERED_NEWS_PROMPT.format(user_interests=user_interests, news_data=news_list, current_date_time=current_date_time),
             }
         ],
         # model="mixtral-8x7b-32768",
@@ -79,6 +83,10 @@ async def get_news_list(preferred_sources: t.List[int], user_interests: t.List[s
 
             # Scrape the webpage
             scraped_data = await scrape_webpage(LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT, url)
+
+            scraped_data = convert_relative_time(scraped_data) # Relative time to absolute datetime
+            scraped_data = scraped_data.get("data") # Get the list of articles
+
             if not scraped_data:
                 continue
 
