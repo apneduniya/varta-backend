@@ -1,49 +1,11 @@
 import typing as t
 from utils.rss_feeds import load_rss_data
 from utils.scrape import scrape_webpage
-from groq import Groq
-import os
-import datetime
-import dotenv
-from helpers.common import parse_json_garbage_with_safety, convert_relative_time
+from utils.predict import predict_news_list
+from utils.summarize import quick_summarize, refined_summarize
+from helpers.common import convert_relative_time
 from helpers.news import get_news_source_details
-from helpers.prompt import USER_PREFERED_NEWS_PROMPT, LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT, ARTICLE_PAGE_SCRAPING_PROMPT
-
-
-dotenv.load_dotenv() # Load environment variables from .env file
-
-
-async def predict_news_list(user_interests: t.List[str], news_list: t.List[t.Dict[str, str]]) -> t.List[t.Dict[str, str]]:
-    """Predict news list based on user interests using AI"""
-
-    client = Groq(
-        api_key=os.environ.get("GROQ_API_KEY"),
-    )
-
-    user_interests = ", ".join(user_interests) # Convert list to string
-    current_date_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Get current date and time (like 2021-10-18 00:00:00)
-
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": USER_PREFERED_NEWS_PROMPT.format(user_interests=user_interests, news_data=news_list, current_date_time=current_date_time),
-            }
-        ],
-        # model="mixtral-8x7b-32768",
-        # model="llama-3.1-8b-instant",
-        # model="llama3-70b-8192",
-        model="llama3-8b-8192",
-    )
-
-    result = chat_completion.choices[0].message.content
-    result_json = parse_json_garbage_with_safety(result)
-    print("result_json", result_json)
-
-    if not result_json or not result_json.get("selected_news"):
-        return {"selected_news": []}
-
-    return result_json
+from helpers.prompt import LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT, ARTICLE_PAGE_SCRAPING_PROMPT
 
 
 async def get_news_list(preferred_sources: t.List[int], user_interests: t.List[str]) -> t.Optional[t.List[t.Dict[str, str]]]:
@@ -114,5 +76,34 @@ async def get_news_list(preferred_sources: t.List[int], user_interests: t.List[s
     
     return result
 
+
+async def get_news_data(url: str, user_summary_choice: str = "quick") -> t.Optional[t.Dict[str, str]]:
+    """Get news data from the url"""
+
+    result = {}
+
+    # Getting the summary of the article
+    if user_summary_choice == "quick":
+        summary = quick_summarize(url)
+
+        # if summary has `\n\n` then remove everything before that (only the first occurence) as it might contain `Here is a concise, precise, coherent, insightful, and comprehensive summary of the article`
+        if "\n\n" in summary:
+            summary = summary.split("\n\n", 1)[1]
+
+        result["summary"] = summary
+
+    elif user_summary_choice == "refined":
+        summary = refined_summarize(url)
+
+        # if summary has `\n\n` then remove everything before that (only the first occurence) as it might contain `Here is a concise, precise, coherent, insightful, and comprehensive summary of the article`
+        if "\n\n" in summary:
+            summary = summary.split("\n\n", 1)[1]
+
+        result["summary"] = summary
+
+    else:
+        return None
+
+    return result
 
 

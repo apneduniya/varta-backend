@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from service.news_data import get_news_list
+from service.news import get_news_list, get_news_data
 from models.news import RequestNewsList, ResponeNewsList, RequestNewsData, ResponseNewsData
 from utils.scrape import scrape_webpage
 from helpers.prompt import ARTICLE_PAGE_SCRAPING_PROMPT
@@ -19,6 +19,6 @@ async def request_news_list(request_data: RequestNewsList) -> ResponeNewsList:
 
 @router.post("/get-news-data", description="Get news data based on the selected news articles.")
 async def request_news_data(request_data: RequestNewsData) -> ResponseNewsData:
-    result = await scrape_webpage(ARTICLE_PAGE_SCRAPING_PROMPT, request_data.url)
+    result = await get_news_data(request_data.url, "refined")
 
     return ResponseNewsData(**result)

@@ -125,3 +125,6 @@ USER_INTEREST = [
     "business",
 ]
 
+
+USER_SUMMARY_CHOICE = "quick" # quick or refined
+

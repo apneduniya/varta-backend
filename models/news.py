@@ -43,42 +43,25 @@ class ResponeNewsList(BaseModel):
 
 class RequestNewsData(BaseModel):
     url: str
+    user_summary_choice: t.Optional[str] = "quick"
 
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                "url": "https://www.example.com/news/lorem-ipsum"
+                "url": "https://www.example.com/news/lorem-ipsum",
+                "user_summary_choice": "quick"
             }
         },
     )
 
 
 class ResponseNewsData(BaseModel):
-    # title: str
-    image: str
     summary: str
-    # author: str
-    # publish_date: str
-    # relative_resources: t.List[t.Dict[str, str]]
 
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                "title": "Lorem ipsum",
-                "top_image": "https://www.example.com/image.jpg",
-                "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                "author": "John Doe",
-                "publish_date": "2021-10-18 00:00:00",
-                "relative_resources": [
-                    {
-                        "type": "image",
-                        "url": "https://www.example.com/image.jpg"
-                    },
-                    {
-                        "type": "link",
-                        "url": "https://www.example.com/link"
-                    }
-                ]
+                "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             }
         },
     )

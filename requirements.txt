@@ -9,3 +9,5 @@ scrapegraphai
 langchain-groq
 fastapi
 pydantic
+transformers
+langchain_community

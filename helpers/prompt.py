@@ -37,3 +37,8 @@ RESPONSE FORMAT:
 
 YOUR RESPONSE:
 """
+
+
+QUICK_SUMMARY_PROMPT = """Behave like the writer/author of the article/news/blog and write a concise, precise, coherent, insightful and comprehensive summary of the following:
+"{text}"
+CONCISE SUMMARY:"""
