@@ -1,5 +1,5 @@
 import typing as t
-from service.news_data.source import NEWS_SOURCES
+from data.source import NEWS_SOURCES
 
 
 def get_news_source_details(source_id: int) -> t.Optional[dict]:
