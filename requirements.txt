@@ -1,0 +1,11 @@
+langchain
+feedparser
+newspaper3k
+listparser
+lxml[html_clean]
+groq
+python-dotenv
+scrapegraphai
+langchain-groq
+fastapi
+pydantic
