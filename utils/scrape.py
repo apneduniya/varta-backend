@@ -38,8 +38,8 @@ dotenv.load_dotenv() # Load environment variables from .env file
 # Configuration for the SmartScraperGraph instance
 graph_config = {
    "llm": {
-    #   "model": "groq/llama3-8b-8192",
-      "model": "groq/llama3-70b-8192",
+      "model": "groq/llama3-8b-8192",
+    #   "model": "groq/llama3-70b-8192",
       "api_key": os.environ.get("GROQ_API_KEY"),
       "verbose": True,
    },

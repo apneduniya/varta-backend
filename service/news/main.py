@@ -3,6 +3,7 @@ from utils.rss_feeds import load_rss_data
 from utils.scrape import scrape_webpage
 from utils.predict import predict_news_list
 from utils.summarize import quick_summarize, refined_summarize
+from utils.link_details import generate_website_preview
 from helpers.common import convert_relative_time
 from helpers.news import get_news_source_details
 from helpers.prompt import LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT, ARTICLE_PAGE_SCRAPING_PROMPT
@@ -26,13 +27,27 @@ async def get_news_list(preferred_sources: t.List[int], user_interests: t.List[s
 
             # Check if the title contains any of the user interests using AI
             predicted_news_list = await predict_news_list(user_interests, loaded_data)
-            print(predicted_news_list)  
+            print(predicted_news_list)
 
             for news_data in loaded_data: # from each news/articles of the news outlet
                 if news_data:
                     
                     # Check if the news article falls under the user interests
                     if int(news_data["id"]) not in predicted_news_list["selected_news"]:
+                        continue
+
+                    # Fetch metadata for the news article URL
+                    url = news_data.get("link")
+                    if url:
+                        metadata = await generate_website_preview(url)
+                        if metadata:
+                            # Add metadata to the news data
+                            # news_data["preview_title"] = metadata["title"]
+                            # news_data["preview_description"] = metadata["description"]
+                            news_data["preview_image"] = metadata["image"]
+                        else:
+                            continue
+                    else:
                         continue
 
                     news_data.pop("id") # `id` is not needed in the response
@@ -65,6 +80,20 @@ async def get_news_list(preferred_sources: t.List[int], user_interests: t.List[s
                     
                     # Check if the news article falls under the user interests
                     if int(news_data["id"]) not in predicted_news_list["selected_news"]:
+                        continue
+
+                    # Fetch metadata for the news article URL
+                    url = news_data.get("link")
+                    if url:
+                        metadata = await generate_website_preview(url)
+                        if metadata:
+                            # Add metadata to the news data
+                            # news_data["preview_title"] = metadata["title"]
+                            # news_data["preview_description"] = metadata["description"]
+                            news_data["preview_image"] = metadata["image"]
+                        else:
+                            continue
+                    else:
                         continue
 
                     news_data.pop("id") # `id` is not needed in the response

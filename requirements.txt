@@ -11,3 +11,6 @@ fastapi
 pydantic
 transformers
 langchain_community
+beautifulsoup4
+lxml
+httpx

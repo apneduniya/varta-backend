@@ -19,7 +19,7 @@ class RequestNewsList(BaseModel):
 
 
 class ResponeNewsList(BaseModel):
-    data: t.List[t.Dict[str, str]]
+    data: t.List[t.Dict[str, t.Optional[str]]]
 
     model_config = ConfigDict(
         populate_by_name=True, # Populate the model with the values from the JSON by name (e.g. `{"name": "Jane Doe"}` will populate the `name` field)
@@ -32,6 +32,7 @@ class ResponeNewsList(BaseModel):
                         "link": "https://www.example.com/news/lorem-ipsum",
                         "source": "Example News",
                         "publish_date": "2021-10-18 00:00:00",
+                        "preview_image": "https://www.example.com/news/lorem-ipsum.jpg"
                     }
                 ]
             }
