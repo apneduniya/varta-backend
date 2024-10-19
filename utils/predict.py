@@ -38,7 +38,14 @@ async def predict_news_list(user_interests: t.List[str], news_list: t.List[t.Dic
     result_json = parse_json_garbage_with_safety(result)
     print(result_json)
 
-    if not result_json or not result_json.get("selected_news"):
+    try:
+        if not result_json or not result_json.get("selected_news"):
+            return {"selected_news": []}
+    except Exception as e:
+        if isinstance(result_json, list): # if result_json is a list itself, then return it
+            return {"selected_news": result_json}
+        
+        print("Error: ", e)
         return {"selected_news": []}
 
     return result_json

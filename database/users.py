@@ -141,4 +141,36 @@ class UserDB:
             return None
         return user.get("subscription_frequency", "daily")
     
+    # Aggregating users for sending emails based on subscription status and frequency
+
+    async def get_daily_subscribed_users(self):
+        """Get all users with subscription status as True and their frequency is daily"""
+        users_list = []
+        users = self.users_collection.find({"subscription_status": True, "subscription_frequency": "daily"})
+
+        async for user in users:
+            users_list.append(user)
+        
+        return users_list
+
+    async def get_weekly_subscribed_users(self):
+        """Get all users with subscription status as True and their frequency is weekly"""
+        users_list = []
+        users = self.users_collection.find({"subscription_status": True, "subscription_frequency": "weekly"})
+                
+        async for user in users:
+            users_list.append(user)
+        
+        return users_list
+
+    async def get_monthly_subscribed_users(self):
+        """Get all users with subscription status as True and their frequency is monthly"""
+        users_list = []
+        users = self.users_collection.find({"subscription_status": True, "subscription_frequency": "monthly"})
+                
+        async for user in users:
+            users_list.append(user)
+        
+        return users_list
+    
     

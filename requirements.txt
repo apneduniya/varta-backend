@@ -18,3 +18,7 @@ passlib
 motor
 python-jose
 python-multipart
+apscheduler
+aiosmtplib
+email-validator
+jinja2
