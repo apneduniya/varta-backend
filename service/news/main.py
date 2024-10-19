@@ -6,7 +6,7 @@ from utils.summarize import quick_summarize, refined_summarize
 from utils.link_details import generate_website_preview
 from helpers.common import convert_relative_time
 from helpers.news import get_news_source_details
-from helpers.prompt import LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT, ARTICLE_PAGE_SCRAPING_PROMPT
+from helpers.prompt import LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT
 
 
 async def get_news_list(preferred_sources: t.List[int], user_interests: t.List[str]) -> t.Optional[t.List[t.Dict[str, str]]]:

@@ -4,8 +4,8 @@ from models.news import RequestNewsList, ResponeNewsList, RequestNewsData, Respo
 from utils.news_outlet import get_news_outlet
 from utils.news_interests import get_news_interests
 
-router = APIRouter()
 
+router = APIRouter()
 
 @router.post("/get-news-list", description="Get list of news based on preferred sources and user interests.")
 async def request_news_list(request_data: RequestNewsList) -> ResponeNewsList:

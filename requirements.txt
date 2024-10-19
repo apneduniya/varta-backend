@@ -14,3 +14,7 @@ langchain_community
 beautifulsoup4
 lxml
 httpx
+passlib
+motor
+python-jose
+python-multipart
