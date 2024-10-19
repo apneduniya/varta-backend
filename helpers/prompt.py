@@ -12,9 +12,9 @@ RESPONSE FORMAT:
 }}
 """
 
-LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT = """Behave like an agent who takes all the recent articles and collect title, link & publish_date from the articles in JSON format.
-YOUR RESPONSE FORMAT:
+LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT = """Behave like an agent who takes all the recent articles and collect title, link & publish_date from the articles and give it as RESPONSE strictly in JSON format.
 
+YOUR RESPONSE FORMAT:
 {{
     "data": [
         {{
@@ -27,7 +27,7 @@ YOUR RESPONSE FORMAT:
 }}
 """
 
-ARTICLE_PAGE_SCRAPING_PROMPT = """You are a bot who scrapes article pages. You will give me a complete concise and comprehensive summary (not just an overview) of the article's description/body (remember not to insclude other details like title in summary) including images and links inside `summary`. Ensure that the summary is coherent and insightful.
+ARTICLE_PAGE_SCRAPING_PROMPT = """You are a bot who scrapes article pages. You will give me a complete concise and comprehensive summary (not just an overview) of the article's description/body (remember not to include other details like title in summary) including images and links inside `summary`. Ensure that the summary is coherent and insightful.
 
 RESPONSE FORMAT:
 {{

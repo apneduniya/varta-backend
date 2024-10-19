@@ -38,10 +38,10 @@ dotenv.load_dotenv() # Load environment variables from .env file
 # Configuration for the SmartScraperGraph instance
 graph_config = {
    "llm": {
-      "model": "groq/llama3-8b-8192",
-    #   "model": "groq/llama3-70b-8192",
-      "api_key": os.environ.get("GROQ_API_KEY"),
-      "verbose": True,
+    "model": "groq/llama3-8b-8192",
+    # "model": "groq/llama3-70b-8192",
+    "api_key": os.environ.get("GROQ_API_KEY"),
+    "verbose": True,
    },
 }
 
@@ -53,12 +53,12 @@ async def scrape_webpage(prompt: str, url: str) -> t.Dict[str, str]:
     smart_scraper_graph = SmartScraperGraph(
         prompt=prompt,
         source=url,
-        config=graph_config
+        config=graph_config,
     )
 
     # Use asyncio to run in a separate thread if .run() is blocking
     result = await asyncio.to_thread(smart_scraper_graph.run)
-    print(result)
+    # print(result)
     return result
 
 
@@ -75,9 +75,5 @@ async def scrape_webpage_with_safety(prompt: str, url: str, retries: int = 3) ->
     return {}
 
 
-if __name__ == "__main__":
-    # Example usage
-    result = scrape_webpage(ARTICLE_PAGE_SCRAPING_PROMPT, "https://economictimes.indiatimes.com/wealth/invest/headline-the-investors-toolkit-how-factor-analysis-can-boost-your-investment-game/articleshow/112137713.cms")
-    print(json.dumps(result, indent=2))
 
 

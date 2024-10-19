@@ -1,81 +1,70 @@
-
-
-
 NEWS_SOURCES = [
-    {
+    { # Working with OKAY speed
         "id": 1,
-        "icon": "https://time.com/favicon.ico",
+        "icon": "https://api.time.com/wp-content/themes/time2014/img/time-logo-og.png",
         "name": "Time Magazine - Top Stories",
         "type": "rss",
         "url": "http://feeds.feedburner.com/time/topstories",
         "language": "en",
     },
-    {
+    { # [ - ] Captcha issue
         "id": 2,
-        "icon": "https://www.nytimes.com/favicon.ico",
-        "name": "NYTimes - Homepage",
+        "icon": "https://help.nytimes.com/hc/theming_assets/01HZPCK5BKMK9ZRNEE1Y6J1PHW",
+        "name": "NYTimes",
         "type": "rss",
         "url": "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
         "language": "en",
     },
-    {
+    { # [ X ] Not working
         "id": 3,
-        "icon": "https://www.washingtonpost.com/favicon.ico",
-        "name": "Washington Post",
-        "type": "rss",
-        "url": "http://feeds.washingtonpost.com/rss/world",
-        "language": "en",
-    },
-    {
-        "id": 4,
-        "icon": "https://www.vox.com/favicon.ico",
+        "icon": "https://i0.wp.com/cdn.vox-cdn.com/thumbor/fjx9AlBgNzbugF_DJEptMX3a-kE=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/20058266/vox_logo_4x3.jpg?ssl=1",
         "name": "Vox - All",
         "type": "rss",
         "url": "https://www.vox.com/rss/index.xml",
         "language": "en",
     },
-    {
-        "id": 5,
+    { # Working with OKAY speed
+        "id": 4,
         "icon": "https://www.bbc.com/favicon.ico",
         "name": "BBC News - World",
         "type": "rss",
         "url": "http://feeds.bbci.co.uk/news/world/rss.xml",
         "language": "en",
     },
-    {
-        "id": 6,
+    { # [ X ] Not working
+        "id": 5,
         "icon": "https://www.cnn.com/favicon.ico",
         "name": "CNN - World news",
         "type": "rss",
         "url": "http://rss.cnn.com/rss/cnn_world.rss",
         "language": "en",
     },
-    {
-        "id": 7,
-        "icon": "https://abcnews.go.com/favicon.ico",
+    { # Sometimes working, sometimes not
+        "id": 6,
+        "icon": "https://yt3.googleusercontent.com/OOT0eq8LoW8V3PMURGYuk0kRSgRGP7EsuGZoODhHBcg1jCB1qkuIAxS-XGnjKX9Q6rf-WKTvkQ=s900-c-k-c0x00ffffff-no-rj",
         "name": "ABC News - Top stories",
         "type": "rss",
         "url": "http://abcnews.go.com/abcnews/topstories",
         "language": "en",
     },
-    {
-        "id": 8,
+    { # Working with OKAY speed
+        "id": 7,
         "icon": "https://www.salon.com/favicon.ico",
         "name": "Salon.com",
         "type": "rss",
         "url": "https://www.salon.com/feed/",
         "language": "en",
     },
-    {
-        "id": 9,
+    { # [ X ] Not working
+        "id": 8,
         "icon": "https://www.newyorker.com/favicon.ico",
         "name": "New Yorker - Everything",
         "type": "rss",
         "url": "http://www.newyorker.com/services/rss/feeds/everything.xml",
         "language": "en",
     },
-    {
-        "id": 10,
+    { # Very very slow
+        "id": 9,
         "icon": "https://www.dailymail.co.uk/favicon.ico",
         "name": "Daily Mail - Latest stories",
         "type": "rss",
@@ -83,27 +72,35 @@ NEWS_SOURCES = [
         "language": "en",
     },
     {
-        "id": 11,
-        "icon": "https://nypost.com/favicon.ico",
+        "id": 10,
+        "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1Un-6bMJhGcSWT5FTX2X0kDnUH6F0XM3-rQ&s",
         "name": "New York Post",
         "type": "rss",
         "url": "https://nypost.com/feed/",
         "language": "en",
     },
     {
-        "id": 12,
+        "id": 11,
         "icon": "https://www.foxnews.com/favicon.ico",
         "name": "Fox News Science",
         "type": "rss",
         "url": "http://feeds.foxnews.com/foxnews/scitech",
         "language": "en",
     },
-    {
-        "id": 13,
-        "icon": "https://cdn.hashnode.com/res/hashnode/image/upload/v1675531271955/ALEtNA1cM.png?auto=compress",
+    { # # Working with OKAY speed
+        "id": 12,
+        "icon": "https://avatars.githubusercontent.com/u/16342708?s=280&v=4",
         "name": "Hashnode - Blog",
         "type": "webpage",
         "url": "https://hashnode.com/recent",
+        "language": "en",
+    },
+    { # A bit slow (was OKAY speed before)
+        "id": 13,
+        "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJGGpPAU6ks5FarBSC_BFLVGcqX3IG8122QQ&s",
+        "name": "Insider",
+        "type": "rss",
+        "url": "https://www.insider.co.uk/?service=rss",
         "language": "en",
     },
     {
@@ -115,16 +112,4 @@ NEWS_SOURCES = [
         "language": "en",
     },
 ]
-
-
-PREFERED_NEWS_SOURCES = [4, 1, 2]
-
-
-USER_INTEREST = [
-    "technology",
-    "business",
-]
-
-
-USER_SUMMARY_CHOICE = "quick" # quick or refined
 

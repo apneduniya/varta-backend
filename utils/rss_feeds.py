@@ -1,12 +1,8 @@
 from langchain_community.document_loaders import RSSFeedLoader 
-# from service.news_data.source import NEWS_SOURCES
 import typing as t
-import asyncio
-# import datetime
 
 
-
-async def load_rss_data(url: str, user_interests: t.List[str]) -> t.Optional[t.List[t.Dict[str, str]]]:
+async def load_rss_data(url: str) -> t.Optional[t.List[t.Dict[str, str]]]:
     """Get title and link from the RSS feed data."""
 
     # Initialize RSSFeedLoader with the given URL

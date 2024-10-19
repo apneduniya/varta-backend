@@ -9,11 +9,15 @@ from langchain_core.prompts import PromptTemplate
 from langchain_text_splitters import CharacterTextSplitter
 
 
-def quick_summarize(url: str) -> t.Union[str, t.Any]:
+async def quick_summarize(url: str) -> t.Union[str, t.Any]:
     """Quickly summarize a webpage using the stuff summarization chain"""
 
     loader = WebBaseLoader(url)
-    docs = loader.load()
+
+    # Collect docs from the async generator
+    docs = []
+    async for doc in loader.alazy_load():
+        docs.append(doc)
 
     prompt = PromptTemplate.from_template(QUICK_SUMMARY_PROMPT)
 
@@ -22,17 +26,23 @@ def quick_summarize(url: str) -> t.Union[str, t.Any]:
     llm_chain = LLMChain(llm=llm, prompt=prompt)
 
     # Define StuffDocumentsChain
-    stuff_chain = StuffDocumentsChain(llm_chain=llm_chain, document_variable_name="text")
+    stuff_chain = StuffDocumentsChain(
+        llm_chain=llm_chain, document_variable_name="text")
 
-    result = stuff_chain.run(docs)
+    result = await stuff_chain.arun(docs)
     return result
 
 
-def refined_summarize(url: str) -> t.Union[str, t.Any]:
+async def refined_summarize(url: str) -> t.Union[str, t.Any]:
     """Refined a summary of a webpage by looping over the input documents and iteratively updating its answer using the refine summarization chain"""
 
     loader = WebBaseLoader(url)
-    docs = loader.load()
+
+    # Collect docs from the async generator
+    docs = []
+    async for doc in loader.alazy_load():
+        docs.append(doc)
+
     text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
         chunk_size=1000, chunk_overlap=0
     )
@@ -68,8 +78,3 @@ def refined_summarize(url: str) -> t.Union[str, t.Any]:
     result = chain({"input_documents": split_docs}, return_only_outputs=True)
 
     return result["output_text"]
-
-
-
-
-

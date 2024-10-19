@@ -14,24 +14,27 @@ async def get_news_list(preferred_sources: t.List[int], user_interests: t.List[s
 
     result = []
 
-    for source_id in preferred_sources: # from each news outlets
+    for source_id in preferred_sources:  # from each news outlets
         source_details = get_news_source_details(source_id)
         type = source_details.get("type")
         if type == "rss":
             url = source_details.get("url")
 
             # Load RSS feed data
-            loaded_data = await load_rss_data(url, user_interests) 
+            print(source_id)
+            loaded_data = await load_rss_data(url)
             if not loaded_data:
                 continue
+            print("loaded rss")
 
             # Check if the title contains any of the user interests using AI
             predicted_news_list = await predict_news_list(user_interests, loaded_data)
-            print(predicted_news_list)
+            print("predicted")
+            # print(predicted_news_list)
 
-            for news_data in loaded_data: # from each news/articles of the news outlet
+            for news_data in loaded_data:  # from each news/articles of the news outlet
                 if news_data:
-                    
+
                     # Check if the news article falls under the user interests
                     if int(news_data["id"]) not in predicted_news_list["selected_news"]:
                         continue
@@ -59,7 +62,10 @@ async def get_news_list(preferred_sources: t.List[int], user_interests: t.List[s
             url = source_details.get("url")
 
             # Scrape the webpage
+            print(source_id)
             scraped_data = await scrape_webpage(LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT, url)
+            # print(scraped_data)
+            print("scraped")
 
             scraped_data = convert_relative_time(scraped_data) # Relative time to absolute datetime
             scraped_data = scraped_data.get("data") # Get the list of articles
@@ -73,7 +79,8 @@ async def get_news_list(preferred_sources: t.List[int], user_interests: t.List[s
 
             # Check if the title contains any of the user interests using AI
             predicted_news_list = await predict_news_list(user_interests, scraped_data)
-            print(predicted_news_list)
+            print("predicted")
+            # print(predicted_news_list)
 
             for news_data in scraped_data: # from each news/articles of the news outlet
                 if news_data:
@@ -113,7 +120,11 @@ async def get_news_data(url: str, user_summary_choice: str = "quick") -> t.Optio
 
     # Getting the summary of the article
     if user_summary_choice == "quick":
-        summary = quick_summarize(url)
+        try:
+            summary = await quick_summarize(url)
+        except Exception as e:
+            print(f"Quick summary didn't worked!\nError: {e} \n\nTrying refined summary.")
+            summary = await refined_summarize(url)
 
         # if summary has `\n\n` then remove everything before that (only the first occurence) as it might contain `Here is a concise, precise, coherent, insightful, and comprehensive summary of the article`
         if "\n\n" in summary:
@@ -122,7 +133,7 @@ async def get_news_data(url: str, user_summary_choice: str = "quick") -> t.Optio
         result["summary"] = summary
 
     elif user_summary_choice == "refined":
-        summary = refined_summarize(url)
+        summary = await refined_summarize(url)
 
         # if summary has `\n\n` then remove everything before that (only the first occurence) as it might contain `Here is a concise, precise, coherent, insightful, and comprehensive summary of the article`
         if "\n\n" in summary:

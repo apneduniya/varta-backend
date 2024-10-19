@@ -60,7 +60,7 @@ def convert_relative_time(data: t.Dict[str, t.Any]) -> t.Dict[str, t.Any]:
         if match:
             value, unit = match.groups()
             value = int(value)
-            print(value, unit)
+            # print(value, unit)
 
             # Map time units to timedelta arguments
             if 'minute' in unit or 'min' in unit:
@@ -91,7 +91,7 @@ def convert_relative_time(data: t.Dict[str, t.Any]) -> t.Dict[str, t.Any]:
 
         elif word_match:
             value, unit = word_match.groups() # value is 'a' or 'an' and unit is the time unit
-            print(value, unit)
+            # print(value, unit)
 
             # Map time units to timedelta arguments
             if 'minute' in unit or 'min' in unit:
@@ -118,6 +118,6 @@ def convert_relative_time(data: t.Dict[str, t.Any]) -> t.Dict[str, t.Any]:
             # Convert to the desired format 'YYYY-MM-DD HH:MM:SS'
             item["publish_date"] = actual_time.strftime('%Y-%m-%d %H:%M:%S')
     
-    print(data)
+    # print(data)
     return data
 
