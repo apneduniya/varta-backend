@@ -1,10 +1,10 @@
 from scrapegraphai.graphs import SmartScraperGraph
 import dotenv
 import os
-import json
 import typing as t
 import asyncio
 # from helpers.prompt import LIST_OF_ARTICLES_PAGE_SCRAPING_PROMPT, ARTICLE_PAGE_SCRAPING_PROMPT
+
 
 ARTICLE_PAGE_SCRAPING_PROMPT = """You are a bot who scrapes article pages. You will give me the details of the article including images and links in JSON format.
 Please provide the title, top image, content, author, publish date, and relative resources of the article.
@@ -38,9 +38,9 @@ dotenv.load_dotenv() # Load environment variables from .env file
 # Configuration for the SmartScraperGraph instance
 graph_config = {
    "llm": {
-    "model": "groq/llama3-8b-8192",
-    # "model": "groq/llama3-70b-8192",
-    "api_key": os.environ.get("GROQ_API_KEY"),
+    "model": "ollama/llama3",
+    "format": "json",  # Ollama needs the format to be specified explicitly
+    "base_url": "http://localhost:11434",  # set ollama URL of the local host (YOU CAN CHANGE IT, if you have a different endpoint
     "verbose": True,
    },
 }

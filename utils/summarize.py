@@ -1,6 +1,6 @@
 from langchain.chains.summarize import load_summarize_chain
 from langchain_community.document_loaders import WebBaseLoader
-from langchain_groq import ChatGroq
+from langchain_ollama import ChatOllama
 import typing as t
 from helpers.prompt import QUICK_SUMMARY_PROMPT
 from langchain.chains.combine_documents.stuff import StuffDocumentsChain
@@ -22,7 +22,7 @@ async def quick_summarize(url: str) -> t.Union[str, t.Any]:
     prompt = PromptTemplate.from_template(QUICK_SUMMARY_PROMPT)
 
     # Define LLM chain
-    llm = ChatGroq(temperature=0, model_name="llama3-8b-8192")
+    llm = ChatOllama(temperature=0, model="llama3")
     llm_chain = LLMChain(llm=llm, prompt=prompt)
 
     # Define StuffDocumentsChain
@@ -64,7 +64,7 @@ async def refined_summarize(url: str) -> t.Union[str, t.Any]:
     refine_prompt = PromptTemplate.from_template(refine_template)
 
     # Define LLM chain
-    llm = ChatGroq(temperature=0, model_name="llama3-8b-8192")
+    llm = ChatOllama(temperature=0, model="llama3")
 
     chain = load_summarize_chain(
         llm=llm,
